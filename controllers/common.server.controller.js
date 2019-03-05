@@ -26,6 +26,7 @@ app.use(bodyParser.json());
 
 // read 
 function getAllItems(req, res) {
+    console.log("getAllItems");
     var clientInput = req.body.options;
     Joi.validate(clientInput, schema, (err, result) => {
         if (err) {
@@ -68,6 +69,7 @@ function updateAnItem(req, res) {
 // create
 function addAnItem(req, res) {
     var clientInput = req.body.options;
+    consoel.log("addAnItem");
     Joi.validate(clientInput, schema, (err, result) => {
         if (err) {
             const error = new Error("Invalid Input");
@@ -147,3 +149,16 @@ module.exports = {
     removeAnItem,
     removeById
 }
+/*
+    var clientInput = {
+    model: "test",
+    redux: "test",
+    data: {},
+    selector:{},
+    collection:"test"
+    uid: null,
+    caseSensitive: false,
+    searchText: "",
+    searchFields: ["description", "name"],
+}
+*/
