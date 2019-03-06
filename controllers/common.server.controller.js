@@ -31,13 +31,14 @@ app.use(bodyParser.json());
 // read 
 function getAllItems(req, res) {
     var clientInput = req.body.options;
-    console.log(clientInput);
     var aggregateArray = getAggregationArray(req);
     var collection = clientInput.collection;
     var connection = db.getDB().collection(collection);
-    connection.aggreagte(aggregateArray, function (err, result) {
-        if (result) {
-            return res.json(result);
+    connection.aggregate(aggregateArray).toArray((err, documents) => {
+        if (err)
+            console.log(err);
+        else {
+            res.json(documents);
         }
     });
 }
@@ -92,23 +93,15 @@ function removeAnItem(req, res) {
 // delete by id
 function removeById(req, res) {
     var clientInput = req.body.options;
-    Joi.validate(clientInput, schema, (err, result) => {
-        if (err) {
-            const error = new Error("Invalid Input");
-            error.status = 400;
-        } else {
-            var collection = clientInput.collection;
-            var connection = db.getDB().collection(collection);
-            const docId = req.params.id;
-            connection.findOneAndDelete({ _id: db.getPrimaryKey(docId) }, function (err, result) {
-                if (result) {
-                    getAllItems(req, res);
-                }
-                else res.json({ result: result, document: result.ops[0], msg: "Successfully delted!!!", error: null });
-            });
+    var collection = clientInput.collection;
+    var connection = db.getDB().collection(collection);
+    const docId = req.params.id;
+    connection.findOneAndDelete({ _id: db.getPrimaryKey(docId) }, function (err, result) {
+        if (result) {
+            getAllItems(req, res);
         }
+        else res.json({ result: result, document: result.ops[0], msg: "Successfully delted!!!", error: null });
     });
-
 }
 
 // Middleware for handling Error
