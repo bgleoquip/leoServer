@@ -11,7 +11,11 @@ const { getAggregationArray } = require("aggregation-query");
 
 // schema used for data validation for our todo document
 const schema = Joi.object().keys({
-    collection: Joi.string().required()
+    collection: Joi.string().required(),
+    data: {
+        name: Joi.string(),
+        description: Joi.string()
+    }
 });
 
 
@@ -26,52 +30,36 @@ app.use(bodyParser.json());
 
 // read 
 function getAllItems(req, res) {
-    console.log("getAllItems");
     var clientInput = req.body.options;
-    Joi.validate(clientInput, schema, (err, result) => {
-        if (err) {
-            const error = new Error("Invalid Input");
-            error.status = 400;
-            next(error);
-        } else {
-            var aggregateArray = getAggregationArray(req);
-            var collection = clientInput.collection;
-            var connection = db.getDB().collection(collection);
-            connection.aggreagte(aggregateArray, function (err, result) {
-                if (result) {
-                    return res.json(result);
-                }
-            });
+    console.log(clientInput);
+    var aggregateArray = getAggregationArray(req);
+    var collection = clientInput.collection;
+    var connection = db.getDB().collection(collection);
+    connection.aggreagte(aggregateArray, function (err, result) {
+        if (result) {
+            return res.json(result);
         }
     });
 }
 // update
 function updateAnItem(req, res) {
     var clientInput = req.body.options;
-    Joi.validate(clientInput, schema, (err, result) => {
-        if (err) {
-            const error = new Error("Invalid Input");
-            error.status = 400;
-            next(error);
-        } else {
-            var collection = clientInput.collection;
-            var connection = db.getDB().collection(collection);
-            connection.findOneAndUpdate(clientInput.selector, { $set: clientInput.data }, function (err, result) {
-                if (result) {
-                    getAllItems(req, res);
-                }
-                else res.json({ result: result, document: result.ops[0], msg: "Successfully inserted!!!", error: null });
-            });
+    var collection = clientInput.collection;
+    var connection = db.getDB().collection(collection);
+    connection.findOneAndUpdate(clientInput.selector, { $set: clientInput.data }, function (err, result) {
+        if (result) {
+            getAllItems(req, res);
         }
+        else res.json({ result: result, document: result.ops[0], msg: "Successfully inserted!!!", error: null });
     });
 
 }
 // create
-function addAnItem(req, res) {
+function addAnItem(req, res, next) {
     var clientInput = req.body.options;
-    consoel.log("addAnItem");
     Joi.validate(clientInput, schema, (err, result) => {
         if (err) {
+            console.log(err);
             const error = new Error("Invalid Input");
             error.status = 400;
             next(error);
@@ -90,22 +78,14 @@ function addAnItem(req, res) {
 // delete    need to work on multiple delete
 function removeAnItem(req, res) {
     var clientInput = req.body.options;
-    Joi.validate(clientInput, schema, (err, result) => {
-        if (err) {
-            const error = new Error("Invalid Input");
-            error.status = 400;
-            next(error);
-        } else {
-            var collection = clientInput.collection;
-            var connection = db.getDB().collection(collection);
-            const docId = clientInput.id;
-            connection.findOneAndDelete(clientInput.selector, function (err, result) {
-                if (result) {
-                    getAllItems(req, res);
-                }
-                else res.json({ result: result, document: result.ops[0], msg: "Successfully delted!!!", error: null });
-            });
+    var collection = clientInput.collection;
+    var connection = db.getDB().collection(collection);
+    const docId = clientInput.id;
+    connection.findOneAndDelete(clientInput.selector, function (err, result) {
+        if (result) {
+            getAllItems(req, res);
         }
+        else res.json({ result: result, document: result.ops[0], msg: "Successfully delted!!!", error: null });
     });
 
 }
@@ -116,7 +96,6 @@ function removeById(req, res) {
         if (err) {
             const error = new Error("Invalid Input");
             error.status = 400;
-            next(error);
         } else {
             var collection = clientInput.collection;
             var connection = db.getDB().collection(collection);
@@ -134,7 +113,7 @@ function removeById(req, res) {
 
 // Middleware for handling Error
 // Sends Error Response Back to User
-app.use((err, req, res, next) => {
+app.use(function (err, req, res, next) {
     res.status(err.status).json({
         error: {
             message: err.message
@@ -142,6 +121,22 @@ app.use((err, req, res, next) => {
     });
 })
 
+db.connect((err) => {
+    // If err unable to connect to database
+    // End application
+    if (err) {
+        console.log('unable to connect to database');
+        process.exit(1);
+    }
+    // // Successfully connected to database
+    // // Start up our Express Application
+    // // And listen for Request
+    // else{
+    //     app.listen(3000,()=>{
+    //         console.log('connected to database, app listening on port 3000');
+    //     });
+    // }
+});
 module.exports = {
     getAllItems,
     updateAnItem,
