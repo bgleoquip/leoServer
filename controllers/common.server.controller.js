@@ -1,5 +1,4 @@
 const express = require('express');
-const Joi = require('joi');
 
 const { setMongo, getDB, connect, getPrimaryKey } = require("./db");
 // const collection = "test";
@@ -8,14 +7,7 @@ const app = express();
 const { getAggregationArray } = require("aggregation-query");
 
 const { getSchema } = require("../schema/index");
-// schema used for data validation for our test document
-const schema = Joi.object().keys({
-    collection: Joi.string().required(),
-    data: {
-        name: Joi.string(),
-        description: Joi.string()
-    }
-});
+
 
 
 
@@ -55,26 +47,19 @@ function updateAnItem(req, res) {
 
 }
 // create
-function addAnItem(req, res, next) {
+
+function addValidItem(req, res) {
     var clientInput = req.body.options;
-    Joi.validate(clientInput, schema, (err, result) => {
-        if (err) {
-            console.log(err);
-            const error = new Error("Invalid Input");
-            error.status = 400;
-            next(error);
-        } else {
-            var collection = clientInput.collection;
-            var connection = getDB().collection(collection);
-            connection.insertOne(clientInput.data, function (err, result) {
-                if (result) {
-                    getAllItems(req, res);
-                }
-                else res.json({ result: result, document: result.ops[0], msg: "Successfully inserted!!!", error: null });
-            });
+    var collection = clientInput.collection;
+    var connection = getDB().collection(collection);
+    connection.insertOne(clientInput.data, function (err, result) {
+        if (result) {
+            getAllItems(req, res);
         }
+        else res.json({ result: result, document: result.ops[0], msg: "Successfully inserted!!!", error: null });
     });
 }
+
 // delete    need to work on multiple delete
 function removeAnItem(req, res) {
     var clientInput = req.body.options;
@@ -134,7 +119,7 @@ module.exports = {
     setMongo,
     getAllItems,
     updateAnItem,
-    addAnItem,
+    addValidItem,
     removeAnItem,
     removeById
 }
