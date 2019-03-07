@@ -1,15 +1,14 @@
 const express = require('express');
-const bodyParser = require("body-parser");
-const path = require('path');
 const Joi = require('joi');
 
-const db = require("../db");
-// const collection = "todo";
+const { setMongo, getDB, connect, getPrimaryKey } = require("./db");
+// const collection = "test";
 const app = express();
 
 const { getAggregationArray } = require("aggregation-query");
 
-// schema used for data validation for our todo document
+const { getSchema } = require("../schema/index");
+// schema used for data validation for our test document
 const schema = Joi.object().keys({
     collection: Joi.string().required(),
     data: {
@@ -21,7 +20,7 @@ const schema = Joi.object().keys({
 
 
 // parses json data sent to us by the user 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 
 // serve static html file to user
 // app.get('/', (req, res) => {
@@ -33,7 +32,7 @@ function getAllItems(req, res) {
     var clientInput = req.body.options;
     var aggregateArray = getAggregationArray(req);
     var collection = clientInput.collection;
-    var connection = db.getDB().collection(collection);
+    var connection = getDB().collection(collection);
     connection.aggregate(aggregateArray).toArray((err, documents) => {
         if (err)
             console.log(err);
@@ -46,7 +45,7 @@ function getAllItems(req, res) {
 function updateAnItem(req, res) {
     var clientInput = req.body.options;
     var collection = clientInput.collection;
-    var connection = db.getDB().collection(collection);
+    var connection = getDB().collection(collection);
     connection.findOneAndUpdate(clientInput.selector, { $set: clientInput.data }, function (err, result) {
         if (result) {
             getAllItems(req, res);
@@ -66,7 +65,7 @@ function addAnItem(req, res, next) {
             next(error);
         } else {
             var collection = clientInput.collection;
-            var connection = db.getDB().collection(collection);
+            var connection = getDB().collection(collection);
             connection.insertOne(clientInput.data, function (err, result) {
                 if (result) {
                     getAllItems(req, res);
@@ -80,7 +79,7 @@ function addAnItem(req, res, next) {
 function removeAnItem(req, res) {
     var clientInput = req.body.options;
     var collection = clientInput.collection;
-    var connection = db.getDB().collection(collection);
+    var connection = getDB().collection(collection);
     const docId = clientInput.id;
     connection.findOneAndDelete(clientInput.selector, function (err, result) {
         if (result) {
@@ -94,9 +93,9 @@ function removeAnItem(req, res) {
 function removeById(req, res) {
     var clientInput = req.body.options;
     var collection = clientInput.collection;
-    var connection = db.getDB().collection(collection);
+    var connection = getDB().collection(collection);
     const docId = req.params.id;
-    connection.findOneAndDelete({ _id: db.getPrimaryKey(docId) }, function (err, result) {
+    connection.findOneAndDelete({ _id: getPrimaryKey(docId) }, function (err, result) {
         if (result) {
             getAllItems(req, res);
         }
@@ -114,7 +113,7 @@ app.use(function (err, req, res, next) {
     });
 })
 
-db.connect((err) => {
+connect((err) => {
     // If err unable to connect to database
     // End application
     if (err) {
@@ -130,7 +129,9 @@ db.connect((err) => {
     //     });
     // }
 });
+
 module.exports = {
+    setMongo,
     getAllItems,
     updateAnItem,
     addAnItem,

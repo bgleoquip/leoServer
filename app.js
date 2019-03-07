@@ -9,13 +9,17 @@ var usersRouter = require('./routes/users');
 var commonRouter = require("./routes/common.server.route");
 
 // config
-var { PORT } = require("./config");
+var { PORT, dbName, dbUrl } = require("./config");
 
 
 var app = express();
 
 // set port
 app.set('port', PORT);
+// set port
+app.set('dbName', dbName);
+// set port
+app.set('dbUrl', dbUrl);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

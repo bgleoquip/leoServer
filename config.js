@@ -4,7 +4,9 @@ var config = {
     MONGO_PASSWORD: "leoquip123",
     MONGO_PATH: "",
     PORT: "8001",
-    HOST: "localhost"
+    HOST: "localhost",
+    dbName: "crudConfig",
+    dbUrl: "mongodb://localhost:27017"
 
 };
 

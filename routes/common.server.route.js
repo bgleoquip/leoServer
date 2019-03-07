@@ -11,7 +11,7 @@ var bodyParser = require('body-parser')
 
 //import controller file
 //import * as commonController from '../controllers/common.server.controller';
-var commonController = require('../controllers/common.server.controller');
+var commonController = require('../controllers/index');
 
 // get an instance of express router
 const app = express();
