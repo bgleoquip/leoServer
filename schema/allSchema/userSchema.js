@@ -13,7 +13,8 @@ const complexityOptions = {
 
 /// schema
 const userSchema = {
-    email: Joi.string(),
-    password: Joi.string()
+    username: Joi.string().alphanum().min(3).max(30),
+    email: Joi.string().email({ minDomainAtoms: 2 }),
+    password: new PasswordComplexity(complexityOptions)
 }
 module.exports = { userSchema };
