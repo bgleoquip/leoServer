@@ -1,11 +1,13 @@
-var test = require("./allSchema/testSchema");
+var { testSchema } = require("./allSchema/testSchema");
+var { userSchema } = require("./allSchema/userSchema.js");
 
-var allSchema = {
-    test: test
+const Joi = require('joi');
+const allSchema = {
+    "testSchema": testSchema,
+    "userSchema": userSchema
 }
-
-var getSchema = function (schemaName) {
-    return allSchema[schemaName];
+const getSchema = function (schemaName) {
+    return allSchema[schemaName]
 }
-module.exports = { getSchema }
+module.exports = { getSchema };
 

@@ -6,10 +6,6 @@ const app = express();
 
 const { getAggregationArray } = require("aggregation-query");
 
-const { getSchema } = require("../schema/index");
-
-
-
 
 // parses json data sent to us by the user 
 // app.use(bodyParser.json());

@@ -1,30 +1,25 @@
-const { setMongo,
-    getAllItems,
-    updateAnItem,
-    addValidItem,
-    removeAnItem,
-    removeById
-} = require("./common.server.controller");
+const { setMongo, getAllItems, updateAnItem, addValidItem, removeAnItem, removeById } = require("./common.server.controller");
 
 // need to get from config.js
 setMongo("testC", "mongodb://localhost:27017");
 
 const Joi = require('joi');
+const { getSchema } = require("../schema/index");
 // schema used for data validation for our test document
-const schema = Joi.object().keys({
-    options: {
-        collection: Joi.string().required(),
-        data: {
-            name: Joi.string(),
-            description: Joi.string()
-        }
-    }
-});
+// const schema = Joi.object().keys({
+//     options: {
+//         collection: Joi.string().required(),
+//         schema:"testSchema",
+//         data: {
+//             name: Joi.string(),
+//             description: Joi.string()
+//         }
+//     }
+// });
 
 function addAnItem(req, res, next) {
-    var clientInput = req.body;
-    Joi.validate(clientInput, schema, (err, result) => {
-        // console.log(result);
+    var clientInput = req.body.options;
+    Joi.validate(clientInput.data, getSchema(clientInput.schema), (err, result) => {
         if (err) {
             console.log("err");
             console.log(err.details);
@@ -39,10 +34,4 @@ function addAnItem(req, res, next) {
     });
 }
 
-module.exports = {
-    getAllItems,
-    updateAnItem,
-    addAnItem,
-    removeAnItem,
-    removeById
-}
+module.exports = { getAllItems, updateAnItem, addAnItem, removeAnItem, removeById };
