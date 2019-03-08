@@ -54,5 +54,9 @@ const getDB = () => {
     return state.db;
 }
 
-module.exports = { setMongo, getDB, connect, getPrimaryKey };
+const connection = (collection) => {
+    return getDB().collection(collection)
+}
+
+module.exports = { setMongo, connection, getDB, connect, getPrimaryKey };
 // help module https://github.com/noobcoder1137/Todo_Rest_CRUD_Application_JQuery_FetchAPI/blob/master/app.js

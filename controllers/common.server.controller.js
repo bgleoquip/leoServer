@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { setMongo, getDB, connect, getPrimaryKey } = require("./db");
+const { setMongo, connection, getDB, connect, getPrimaryKey } = require("./db");
 // const collection = "test";
 const app = express();
 
@@ -20,8 +20,7 @@ function getAllItems(req, res) {
     var clientInput = req.body.options;
     var aggregateArray = getAggregationArray(req);
     var collection = clientInput.collection;
-    var connection = getDB().collection(collection);
-    connection.aggregate(aggregateArray).toArray((err, documents) => {
+    connection(collection).aggregate(aggregateArray).toArray((err, documents) => {
         if (err)
             console.log(err);
         else {
@@ -33,8 +32,7 @@ function getAllItems(req, res) {
 function updateAnItem(req, res) {
     var clientInput = req.body.options;
     var collection = clientInput.collection;
-    var connection = getDB().collection(collection);
-    connection.findOneAndUpdate(clientInput.selector, { $set: clientInput.data }, function (err, result) {
+    connection(collection).findOneAndUpdate(clientInput.selector, { $set: clientInput.data }, function (err, result) {
         if (result) {
             getAllItems(req, res);
         }
@@ -47,8 +45,7 @@ function updateAnItem(req, res) {
 function addValidItem(req, res) {
     var clientInput = req.body.options;
     var collection = clientInput.collection;
-    var connection = getDB().collection(collection);
-    connection.insertOne(clientInput.data, function (err, result) {
+    connection(collection).insertOne(clientInput.data, function (err, result) {
         if (result) {
             getAllItems(req, res);
         }
@@ -60,9 +57,7 @@ function addValidItem(req, res) {
 function removeAnItem(req, res) {
     var clientInput = req.body.options;
     var collection = clientInput.collection;
-    var connection = getDB().collection(collection);
-    const docId = clientInput.id;
-    connection.findOneAndDelete(clientInput.selector, function (err, result) {
+    connection(collection).findOneAndDelete(clientInput.selector, function (err, result) {
         if (result) {
             getAllItems(req, res);
         }

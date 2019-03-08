@@ -1,7 +1,8 @@
 const { setMongo, getAllItems, updateAnItem, addValidItem, removeAnItem, removeById } = require("./common.server.controller");
 
 // need to get from config.js
-setMongo("testC", "mongodb://localhost:27017");
+const { dbName, dbUrl } = require('../config');
+setMongo(dbName || "testC", dbUrl || "mongodb://localhost:27017");
 
 const Joi = require('joi');
 const { getSchema } = require("../schema/index");
