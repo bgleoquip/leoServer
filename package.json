@@ -28,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/bgleoquip/leoServer/issues"
   },
-  "homepage": "https://github.com/bgleoquip/leoServer#readme"
+  "homepage": "https://github.com/bgleoquip/leoServer#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
 }
