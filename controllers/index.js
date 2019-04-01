@@ -1,7 +1,7 @@
 const { setMongo, getAllItems, updateAnItem, addValidItem, removeAnItem, removeById } = require("./common.server.controller");
 
 // need to get from config.js
-const { dbName, dbUrl } = require('../config');
+const { dbName, dbUrl } = require('../configration/mongoDB');
 setMongo(dbName || "testC", dbUrl || "mongodb://localhost:27017");
 
 const Joi = require('joi');

@@ -9,7 +9,7 @@ var usersRouter = require('./routes/users');
 var commonRouter = require("./routes/common.server.route");
 
 // config
-var { PORT, dbName, dbUrl } = require("./config");
+var { PORT, dbName, dbUrl } = require("./configration/mongoDB");
 
 
 var app = express();
