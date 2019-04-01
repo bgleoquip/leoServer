@@ -1,11 +1,6 @@
 // ./express-server/routes/notes.server.route.js
 var express = require("express");
 
-// import config from '../config.js';
-// var config = require("./config");
-
-// set the MONGO_URL
-
 
 var bodyParser = require('body-parser')
 
