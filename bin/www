@@ -32,17 +32,6 @@ server.on('listening', onListening);
 console.log("port", port);
 
 
-var mongoose = require("mongoose");
-/// db set for user
-try{
-
-  mongoose.connect(app.get("dbUrl") + '/' + app.get("dbName") , {
-    useCreateIndex: true, useNewUrlParser: true});
-  
-}
-catch(e){
-  console.log(e)
-}
 /**
  * Normalize a port into a number, string, or false.
  */

@@ -1,8 +1,23 @@
 const { setMongo, getAllItems, updateAnItem, addValidItem, removeAnItem, removeById } = require("./common.server.controller");
 
 // need to get from config.js
-const { dbName, dbUrl } = require('../configration/mongoDB');
-setMongo(dbName || "testC", dbUrl || "mongodb://localhost:27017");
+var  { dbName, dbUrl } = require('../configration');
+dbName = dbName || "testC";
+dbUrl = "mongodb://localhost:27017"
+setMongo(dbName, dbUrl);
+
+console.log("mongooes",dbUrl + '/' +  dbName)
+var mongoose = require("mongoose");
+/// db set for user
+try{
+
+  mongoose.connect(dbUrl + '/' +  dbName, {
+    useCreateIndex: true, useNewUrlParser: true});
+  
+}
+catch(e){
+  console.log(e)
+}
 
 const Joi = require('joi');
 const { getSchema } = require("../schema/index");
