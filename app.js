@@ -9,7 +9,7 @@ var usersRouter = require('./routes/users');
 var commonRouter = require("./routes/common.server.route");
 
 // config
-var { PORT, dbName, dbUrl } = require("./configration");
+var { PORT, dbName, dbUrl } = require("./configuration");
 
 
 var app = express();
