@@ -1,4 +1,4 @@
-const { setMongo, getAllItems, updateAnItem, addValidItem, removeAnItem, removeById } = require("./common.server.controller");
+const { setMongo, getAllItems, updateAnItem, addValidItem, removeAnItem, removeById } = require("mongo-crud-common");
 
 // need to get from config.js
 var  { dbName, dbUrl } = require('../configuration');
@@ -32,6 +32,7 @@ const { getSchema } = require("../schema/index");
 // });
 
 function addAnItem(req, res, next) {
+    // console.log("add");
     var clientInput = req.body.options;
     Joi.validate(clientInput.data, getSchema(clientInput.schema), (err, result) => {
         if (err) {

@@ -18,6 +18,7 @@
     "http-errors": "~1.6.2",
     "joi": "^14.3.1",
     "joi-password-complexity": "^2.0.1",
+    "mongo-crud-common": "0.0.1",
     "mongodb": "^3.1.13",
     "mongoose": "^5.4.20",
     "morgan": "~1.9.0",
