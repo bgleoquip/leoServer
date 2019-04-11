@@ -4,6 +4,10 @@ const { setMongo, getAllItems, updateAnItem, addValidItem, removeAnItem, removeB
 var  { dbName, dbUrl } = require('../configuration');
 dbName = dbName || "testC";
 dbUrl = "mongodb://localhost:27017"
+
+if(process.env.NODE_ENV === 'test'){
+    dbName = dbName+"Test";
+}
 setMongo(dbName, dbUrl);
 
 console.log("mongooes",dbUrl + '/' +  dbName)
