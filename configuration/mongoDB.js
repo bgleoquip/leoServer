@@ -6,7 +6,7 @@ var config = {
     PORT: "3000",
     HOST: "localhost",
     dbName: "crudConfig",
-    dbUrl: "mongodb://localhost:27017"
+    dbUrl: "mongodb+srv://bgleoquip:leoquip123@bgcluster-vwvhb.mongodb.net"
 
 };
 
