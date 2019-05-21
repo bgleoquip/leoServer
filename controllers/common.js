@@ -1,26 +1,8 @@
-const { setMongo, getAllItems, updateAnItem, addValidItem, removeAnItem, removeById } = require("mongo-crud-common");
+const { setMongo, getAllItems, updateAnItem, addValidItem, removeAnItem, removeById } = require("./common.server.controller");
 
 // need to get from config.js
-var { dbName, dbUrl } = require('../configuration');
-dbName = dbName || "testC";
-dbUrl = dbUrl || "mongodb://localhost:27017"
-
-if (process.env.NODE_ENV === 'test') {
-    dbName = dbName + "Test";
-}
-setMongo(dbName, dbUrl);
-
-console.log("mongooes", dbUrl + '/' + dbName)
-var mongoose = require("mongoose");
-/// db set for user
-try {
-    mongoose.connect(dbUrl + '/' + dbName, {
-        useCreateIndex: true, useNewUrlParser: true
-    });
-}
-catch (e) {
-    console.log(e)
-}
+const { dbName, dbUrl } = require('../config');
+setMongo(dbName || "testC", dbUrl || "mongodb://localhost:27017");
 
 const Joi = require('joi');
 const { getSchema } = require("../schema/index");
@@ -37,7 +19,6 @@ const { getSchema } = require("../schema/index");
 // });
 
 function addAnItem(req, res, next) {
-    // console.log("add");
     var clientInput = req.body.options;
     Joi.validate(clientInput.data, getSchema(clientInput.schema), (err, result) => {
         if (err) {

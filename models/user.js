@@ -14,7 +14,7 @@ const userSchema = new Schema({
       type: String,
       lowercase: true
     },
-    password: { 
+    password: {
       type: String
     }
   },
@@ -38,7 +38,7 @@ const userSchema = new Schema({
   }
 });
 
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
   try {
     console.log('entered');
     if (this.method !== 'local') {
@@ -53,15 +53,15 @@ userSchema.pre('save', async function(next) {
     this.local.password = passwordHash;
     console.log('exited');
     next();
-  } catch(error) {
+  } catch (error) {
     next(error);
   }
 });
 
-userSchema.methods.isValidPassword = async function(newPassword) {
+userSchema.methods.isValidPassword = async function (newPassword) {
   try {
     return await bcrypt.compare(newPassword, this.local.password);
-  } catch(error) {
+  } catch (error) {
     throw new Error(error);
   }
 }
