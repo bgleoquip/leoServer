@@ -8,11 +8,14 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var commonRouter = require("./routes/common.server.route");
 
+const cors =require("cors");
 // config
 var { PORT, dbName, dbUrl } = require("./configuration");
 
 
 var app = express();
+
+app.use(cors());
 
 // set port
 app.set('port', PORT);
