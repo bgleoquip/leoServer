@@ -2,6 +2,7 @@ const { setMongo, getAllItems, updateAnItem, addValidItem, removeAnItem, removeB
 
 // need to get from config.js
 const { dbName, dbUrl } = require('../config');
+console.log(dbName, dbUrl);
 setMongo(dbName || "testC", dbUrl || "mongodb://localhost:27017");
 
 const Joi = require('joi');
