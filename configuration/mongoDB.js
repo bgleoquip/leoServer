@@ -3,11 +3,10 @@ var config = {
     MONGO_USERNAME: "bgleoquip",
     MONGO_PASSWORD: "leoquip123",
     MONGO_PATH: "",
-    PORT: "3000",
     HOST: "localhost",
     dbName: "crudConfig",
     dbUrl: "mongodb+srv://bgleoquip:leoquip123@bgcluster-vwvhb.mongodb.net"
 
 };
 
-module.exports = config;
+module.exports = config; 

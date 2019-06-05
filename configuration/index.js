@@ -1,5 +1,5 @@
-const { PORT, dbName, dbUrl } = require("./mongoDB");
-const {JWT_SECRET,oauth} = require("./jwt");
+const { dbName, dbUrl } = require("./mongoDB");
+const { JWT_SECRET, oauth } = require("./jwt");
 module.exports = {
-    dbUrl,dbName,PORT,JWT_SECRET,oauth
+    dbUrl, dbName, JWT_SECRET, oauth
 }
