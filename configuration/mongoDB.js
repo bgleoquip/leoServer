@@ -3,6 +3,7 @@ var config = {
     MONGO_USERNAME: "bgleoquip",
     MONGO_PASSWORD: "leoquip123",
     MONGO_PATH: "",
+    PORT: "8001",
     HOST: "localhost",
     dbName: "crudConfig",
     dbUrl: "mongodb+srv://bgleoquip:leoquip123@bgcluster-vwvhb.mongodb.net"
