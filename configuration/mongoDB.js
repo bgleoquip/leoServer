@@ -4,7 +4,7 @@ var config = {
     MONGO_PASSWORD: "leoquip123",
     MONGO_PATH: "",
     dbName: "crudConfig",
-    dbUrl: "mongodb://localhost:27017"//"mongodb+srv://bgleoquip:leoquip7?@bgcluster-vwvhb.mongodb.net"
+    dbUrl: "mongodb://bgbhavesh:effective7?@ds159574.mlab.com:59574/leoserver"////"mongodb://localhost:27017"//"mongodb+srv://bgleoquip:leoquip7?@bgcluster-vwvhb.mongodb.net"
 
 };
 
