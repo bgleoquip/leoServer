@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <p>Welcome to <%= title %></p>
+  <form action="/team_name_url/" method="post">
+    <table>
+      <tr>
+        <td> <label for="team_name">Enter Collection Name: </label> </td>
+        <td>
+          <input id="collectionName" type="text" name="collectionName" placeholder="Collection Name">
+        </td>
+      </tr>
+      <tr>
+        <td> <label for="match">Enter Match Query: </label> </td>
+        <td>
+          <input id="match" type="text" name="match" placeholder="Match Query">
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="3"> <label for="team_name">Enter Search Text: </label> </td>
+        <td rowspan="3">
+          <input id="searchText" type="text" name="searchText" placeholder="Search Text">
+        </td>
+      </tr>
+      <tr>
+        <td> <label for="team_name">Sensitive: </label> </td>
+        <td>
+          <input id="caseSensitive" type="checkbox" name="caseSensitive" placeholder="Sensitive">
+        </td>
+      </tr>
+      <tr>
+        <td> <label for="team_name">Enter Fields: </label> </td>
+        <td>
+          <input id="searchFields" type="text" name="searchFields" placeholder="Fields">
+        </td>
+      </tr>
+
+      <tr>
+        <td> <label for="team_name">Limit: </label> </td>
+        <td>
+          <input id="limit" type="number" name="limit" value="10">
+        </td>
+      </tr>
+      <tr>
+        <td> <label for="team_name">skip: </label> </td>
+        <td>
+          <input id="skip" type="number" name="skip" value="0">
+        </td>
+      </tr>
+      <tr>
+        <td> <label for="team_name">Enter Projection Fields: </label> </td>
+        <td>
+          <input id="searchFields" type="text" name="searchFields" placeholder="Fields">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="submit" value="invoke">
+        </td>
+      </tr>
+    </table>
+  </form>
+</body>
+
+</html>

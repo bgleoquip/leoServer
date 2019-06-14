@@ -14,16 +14,18 @@ router.route('/signup')
 
 router.route('/signin')
   .post(validateBody(schemas.authSchema), passportSignIn, UsersController.signIn);
-  
+
 router.route('/oauth/google')
   .post(passport.authenticate('googleToken', { session: false }), UsersController.googleOAuth);
 
 router.route('/secret')
   .get(passportJWT, UsersController.secret);
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+
+/* GET Common api test Page. */
+router.get('/users', function (req, res, next) {
+  res.render('users', { title: 'Users' });
 });
+
 
 module.exports = router;
