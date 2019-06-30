@@ -1,7 +1,6 @@
 const express = require('express');
 const router = require('express-promise-router')();
 const passport = require('passport');
-
 const passportConf = require('../passport');
 
 const { validateBody, schemas } = require('../helpers/routeHelpers');
@@ -18,14 +17,22 @@ router.route('/signin')
 router.route('/oauth/google')
   .post(passport.authenticate('googleToken', { session: false }), UsersController.googleOAuth);
 
-router.route('/secret')
-  .get(passportJWT, UsersController.secret);
+router.route('/oauth/facebook')
+  .post(passport.authenticate('facebookToken', { session: false }), UsersController.facebookOAuth);
 
+router.route('/oauth/link/google')
+  .post(passportJWT, passport.authorize('googleToken', { session: false }), UsersController.linkGoogle)
 
-/* GET Common api test Page. */
-router.get('/users', function (req, res, next) {
-  res.render('users', { title: 'Users' });
-});
+router.route('/oauth/unlink/google')
+  .post(passportJWT, UsersController.unlinkGoogle);
 
+router.route('/oauth/link/facebook')
+  .post(passportJWT, passport.authorize('facebookToken', { session: false }), UsersController.linkFacebook)
+
+router.route('/oauth/unlink/facebook')
+  .post(passportJWT, UsersController.unlinkFacebook);
+
+router.route('/dashboard')
+  .get(passportJWT, UsersController.dashboard);
 
 module.exports = router;
