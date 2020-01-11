@@ -15,7 +15,7 @@ var mongoose = require("mongoose");
 /// db set for user
 try {
     mongoose.connect(dbUrl + '/' + dbName, {
-        useCreateIndex: true, useNewUrlParser: true
+        useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true
     });
 }
 catch (e) {
