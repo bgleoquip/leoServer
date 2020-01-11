@@ -14,8 +14,8 @@ console.log("mongooes", dbUrl + '/' + dbName)
 var mongoose = require("mongoose");
 /// db set for user
 try {
-    mongoose.connect(dbUrl + '/' + dbName, {
-        useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true
+    mongoose.connect(dbUrl, {
+        useCreateIndex: true, useNewUrlParser: true
     });
 }
 catch (e) {
