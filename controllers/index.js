@@ -1,24 +1,25 @@
 const { setMongo, getAllItems, updateAnItem, addValidItem, removeAnItem, removeById } = require("mongo-crud-common");
 
 // need to get from config.js
-var  { dbName, dbUrl } = require('../configuration');
+var { dbName, dbUrl } = require('../configuration');
 dbName = dbName || "testC";
-dbUrl = "mongodb://localhost:27017"
+dbUrl = dbUrl || "mongodb://localhost:27017";
 
-if(process.env.NODE_ENV === 'test'){
-    dbName = dbName+"Test";
+if (process.env.NODE_ENV === 'test') {
+    dbName = dbName + "Test";
 }
 setMongo(dbName, dbUrl);
 
-console.log("mongooes",dbUrl + '/' +  dbName)
+console.log("mongooes", dbUrl + '/' + dbName)
 var mongoose = require("mongoose");
 /// db set for user
-try{
-  mongoose.connect(dbUrl + '/' +  dbName, {
-    useCreateIndex: true, useNewUrlParser: true});
+try {
+    mongoose.connect(dbUrl + '/' + dbName, {
+        useCreateIndex: true, useNewUrlParser: true
+    });
 }
-catch(e){
-  console.log(e)
+catch (e) {
+    console.log(e)
 }
 
 const Joi = require('joi');
